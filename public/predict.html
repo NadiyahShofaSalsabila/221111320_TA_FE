@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PREDICT A-STOCK</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <span>A-<span class="highlight">STOCK</span></span>
+            </div>
+
+            <!-- Checkbox Trick + Hamburger -->
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
+            <!-- Menu -->
+            <div class="nav-menu">
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="/data" class="nav-link">
+                    <i class="fas fa-database"></i>
+                    <span>Data</span>
+                </a>
+                <a href="/model" class="nav-link">
+                    <i class="fas fa-cogs"></i>
+                    <span>Model</span>
+                </a>
+                <a href="/predict" class="nav-link active">
+                    <i class="fas fa-magic"></i>
+                    <span>Predict</span>
+                </a>
+                <a href="/history" class="nav-link">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="predict-main">
+        <div class="predict-container">
+
+            <h1 class="predict-title">
+                PREDIKSI HARGA SAHAM<br>
+                DENGAN PRE-TRAINED MODEL
+            </h1>
+
+            <div class="predict-card">
+
+                <!-- Pilih Model -->
+                <div class="form-row">
+                    <label>Model:</label>
+                    <select id="modelSelect" class="model-select" onchange="loadInputData()">
+                        <option value="">Pilih Model</option>
+                        <option value="LSTM" data-timestep="2">LSTM (TimeStep: 2)</option>
+                        <option value="BiLSTM" data-timestep="3">BiLSTM (TimeStep: 3)</option>
+                    </select>
+                </div>
+
+                <!-- Input Data -->
+                <div id="inputSection" class="section" style="display: none;">
+                    <h3 class="section-title">Data Input (Historical Data)</h3>
+                    <div class="table-container">
+                        <table class="input-table">
+                            <thead>
+                                <tr>
+                                    <th>DATE</th>
+                                    <th>CLOSE</th>
+                                    <th>HIGH</th>
+                                    <th>LOW</th>
+                                    <th>OPEN</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inputTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tombol Prediksi -->
+                <div class="predict-button-container">
+                    <button id="predictBtn" onclick="jalankanPrediksi()" class="btn-predict" disabled>
+                        PREDIKSI
+                    </button>
+                </div>
+
+                <!-- Hasil Prediksi -->
+                <div id="resultSection" class="result-section" style="display: none;">
+                    <h2 class="result-title">HASIL PREDIKSI HARGA SAHAM</h2>
+
+                    <div class="prediction-date-info">
+                        <strong>Prediksi Harga:</strong>
+                        <span id="prediksiTanggal" class="prediction-date"></span>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="result-table">
+                            <thead>
+                                <tr>
+                                    <th>DATE</th>
+                                    <th>MODEL</th>
+                                    <th>HASIL PREDIKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultTableBody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="history-btn-container">
+                        <button onclick="goToHistory()" class="btn-history">HISTORY PREDIKSI</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const dummyData = [
+            { date: "2026-04-01", close: "2850", high: "2920", low: "2810", open: "2870" },
+            { date: "2026-04-02", close: "2860", high: "2900", low: "2830", open: "2845" },
+            { date: "2026-04-03", close: "2810", high: "2870", low: "2780", open: "2855" },
+            { date: "2026-04-04", close: "2795", high: "2840", low: "2760", open: "2810" },
+            { date: "2026-04-05", close: "2820", high: "2880", low: "2790", open: "2830" },
+        ];
+
+        function loadInputData() {
+            const select = document.getElementById('modelSelect');
+            const model = select.value;
+            const timestep = parseInt(select.options[select.selectedIndex].dataset.timestep || 0);
+
+            const inputSection = document.getElementById('inputSection');
+            const predictBtn = document.getElementById('predictBtn');
+            const tbody = document.getElementById('inputTableBody');
+
+            if (!model) {
+                inputSection.style.display = 'none';
+                predictBtn.disabled = true;
+                return;
+            }
+
+            // Ambil data sesuai timestep
+            const dataToShow = dummyData.slice(0, timestep);
+
+            let html = '';
+            dataToShow.forEach(row => {
+                html += `
+          <tr>
+            <td>${row.date}</td>
+            <td>${row.close}</td>
+            <td>${row.high}</td>
+            <td>${row.low}</td>
+            <td>${row.open}</td>
+          </tr>`;
+            });
+
+            tbody.innerHTML = html;
+            inputSection.style.display = 'block';
+            predictBtn.disabled = false;
+        }
+
+        function jalankanPrediksi() {
+            const model = document.getElementById('modelSelect').value;
+            if (!model) return;
+
+            const lastDateStr = document.getElementById('inputTableBody').querySelector('tr:last-child td:first-child').textContent;
+            const lastDate = new Date(lastDateStr);
+            const nextDate = new Date(lastDate);
+            nextDate.setDate(nextDate.getDate() + 1);
+
+            const formattedNextDate = nextDate.toISOString().split('T')[0]; // YYYY-MM-DD
+            const displayDate = formattedNextDate.split('-').reverse().join('/'); // DD/MM/YYYY
+
+            // Tampilkan hasil prediksi (1 hari ke depan)
+            const tbody = document.getElementById('resultTableBody');
+            tbody.innerHTML = `
+        <tr>
+          <td>${formattedNextDate}</td>
+          <td>${model}</td>
+          <td>Rp 2,985</td>
+        </tr>
+      `;
+
+            // Tampilkan tanggal prediksi
+            document.getElementById('prediksiTanggal').textContent = displayDate;
+
+            // Tampilkan section hasil
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('resultSection').scrollIntoView({ behavior: "smooth" });
+        }
+
+        function goToHistory() {
+            alert("Mengarah ke halaman History Prediksi...");
+            window.location.href = "/history";
+        }
+    </script>
+
+</body>
+
+</html>

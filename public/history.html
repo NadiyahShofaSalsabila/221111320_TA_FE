@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HISTORY A-STOCK</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <span>A-<span class="highlight">STOCK</span></span>
+            </div>
+
+            <!-- Checkbox Trick + Hamburger -->
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
+            <!-- Menu -->
+            <div class="nav-menu">
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="/data" class="nav-link">
+                    <i class="fas fa-database"></i>
+                    <span>Data</span>
+                </a>
+                <a href="/model" class="nav-link">
+                    <i class="fas fa-cogs"></i>
+                    <span>Model</span>
+                </a>
+                <a href="/predict" class="nav-link">
+                    <i class="fas fa-magic"></i>
+                    <span>Predict</span>
+                </a>
+                <a href="/history" class="nav-link active">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="history-main">
+        <div class="history-container">
+
+            <!-- Header -->
+            <div class="history-header">
+                <h1 class="history-title">
+                    HISTORY PREDIKSI HARGA SAHAM<br>
+                    DENGAN PRE-TRAINED MODEL
+                </h1>
+            </div>
+
+            <br>
+            <!-- Tabel -->
+            <div class="table-container">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>DATE</th>
+                            <th>MODEL</th>
+                            <th>HASIL PREDIKSI</th>
+                            <th>AKSI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2026-04-07</td>
+                            <td>LSTM</td>
+                            <td>2,920</td>
+                            <td>
+                                <div class="history-table-actions">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-trash"></i>
+                                        HAPUS
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2026-04-07</td>
+                            <td>LSTM</td>
+                            <td>2,920</td>
+                            <td>
+                                <div class="history-table-actions">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-trash"></i>
+                                        HAPUS
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2026-04-07</td>
+                            <td>LSTM</td>
+                            <td>2,920</td>
+                            <td>
+                                <div class="history-table-actions">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-trash"></i>
+                                        HAPUS
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2026-04-07</td>
+                            <td>LSTM</td>
+                            <td>2,920</td>
+                            <td>
+                                <div class="history-table-actions">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-trash"></i>
+                                        HAPUS
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+
+</html>

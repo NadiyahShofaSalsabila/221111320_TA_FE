@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MODEL A-STOCK</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <span>A-<span class="highlight">STOCK</span></span>
+            </div>
+
+            <!-- Checkbox Trick + Hamburger -->
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
+            <!-- Menu -->
+            <div class="nav-menu">
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="/data" class="nav-link">
+                    <i class="fas fa-database"></i>
+                    <span>Data</span>
+                </a>
+                <a href="/model" class="nav-link active">
+                    <i class="fas fa-cogs"></i>
+                    <span>Model</span>
+                </a>
+                <a href="/predict" class="nav-link">
+                    <i class="fas fa-magic"></i>
+                    <span>Predict</span>
+                </a>
+                <a href="/history" class="nav-link">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="model-main">
+        <div class="model-container">
+
+            <!-- Header -->
+            <div class="model-header">
+                <h1 class="model-title">
+                    DAFTAR PRE-TRAINED MODEL
+                </h1>
+            </div>
+            <div class="model-actions">
+                <button class="btn btn-primary" onclick="bukaModalTambahModel()">
+                    <i class="fas fa-upload"></i>
+                    TAMBAH MODEL BARU
+                </button>
+            </div>
+            <br>
+            <!-- Tabel -->
+            <div class="table-container">
+                <table class="model-table">
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>NAMA MODEL</th>
+                            <th>TIMESTEP</th>
+                            <th>AKSI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>LSTM</td>
+                            <td>2</td>
+                            <td>
+                                <div class="model-table-actions">
+                                    <button class="btn btn-small btn-edit" onclick="bukaModalEditModel(1, 'LSTM', 2)">
+                                        <i class="fas fa-edit"></i> EDIT
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-trash"></i>
+                                        HAPUS
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>BiLSTM</td>
+                            <td>2</td>
+                            <td>
+                                <div class="model-table-actions">
+                                    <button class="btn btn-small btn-edit" onclick="bukaModalEditModel(1, 'LSTM', 2)">
+                                        <i class="fas fa-edit"></i> EDIT
+                                    </button>
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-trash"></i>
+                                        HAPUS
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ====================== MODAL TAMBAH MODEL ====================== -->
+    <div id="modalTambahModel" class="modal">
+        <div class="modal-content model-modal">
+
+            <h2 class="modal-title">TAMBAH PRE-TRAINED MODEL BARU</h2>
+
+            <div class="form-group">
+                <label>NAMA MODEL</label>
+                <input type="text" id="namaModel" class="form-input" placeholder="Masukkan nama model">
+            </div>
+
+            <div class="form-group">
+                <label>MODEL YANG TELAH DI TRAINED</label>
+                <button class="upload-btn" onclick="triggerFileUpload()">
+                    <i class="fas fa-upload"></i> UPLOAD FILE
+                </button>
+                <input type="file" id="modelFile" accept=".h5" style="display: none;">
+                <div id="fileNameDisplay" class="file-name"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Jumlah TimeStep</label>
+                <input type="number" id="timeStep" class="form-input" placeholder="Masukkan jumlah timestep" min="1">
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-primary" onclick="tambahModelBaru()">TAMBAH MODEL</button>
+                <button class="btn btn-primary" onclick="tutupModalTambahModel()">BATAL</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ====================== MODAL EDIT MODEL ====================== -->
+    <div id="modalEditModel" class="modal">
+        <div class="modal-content model-modal">
+
+            <h2 class="modal-title">EDIT PRE-TRAINED MODEL</h2>
+
+            <div class="form-group">
+                <label>NAMA MODEL</label>
+                <input type="text" id="editNamaModel" class="form-input" placeholder="Masukkan nama model">
+            </div>
+
+            <div class="form-group">
+                <label>MODEL YANG TELAH DI TRAINED</label>
+                <button class="upload-btn" onclick="triggerEditFileUpload()">
+                    <i class="fas fa-upload"></i>
+                    UPLOAD FILE BARU (Opsional)
+                </button>
+                <input type="file" id="editModelFile" accept=".h5" style="display: none;">
+                <div id="editFileNameDisplay" class="file-name"></div>
+            </div>
+
+            <div class="form-group">
+                <label>Jumlah TimeStep</label>
+                <input type="number" id="editTimeStep" class="form-input" placeholder="Masukkan jumlah timestep"
+                    min="1">
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-primary" onclick="tutupModalEditModel()">BATAL</button>
+                <button class="btn btn-primary" onclick="simpanPerubahanModel()">SIMPAN PERUBAHAN</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Modal Tambah Model
+        const modalTambah = document.getElementById('modalTambahModel');
+        const fileInputTambah = document.getElementById('modelFile');
+        const fileNameTambah = document.getElementById('fileNameDisplay');
+
+        // Modal Edit Model
+        const modalEdit = document.getElementById('modalEditModel');
+        const fileInputEdit = document.getElementById('editModelFile');
+        const fileNameEdit = document.getElementById('editFileNameDisplay');
+
+        let currentEditIndex = null;   // untuk menyimpan index baris yang diedit
+
+        // ====================== MODAL TAMBAH ======================
+        function bukaModalTambahModel() {
+            modalTambah.style.display = 'flex';
+            resetTambahForm();
+        }
+
+        function tutupModalTambahModel() {
+            modalTambah.style.display = 'none';
+        }
+
+        function resetTambahForm() {
+            document.getElementById('namaModel').value = '';
+            document.getElementById('timeStep').value = '';
+            fileInputTambah.value = '';
+            fileNameTambah.textContent = '';
+        }
+
+        function triggerFileUpload() {
+            fileInputTambah.click();
+        }
+
+        // ====================== MODAL EDIT ======================
+        function bukaModalEditModel(index, nama, timestep) {
+            currentEditIndex = index;
+            modalEdit.style.display = 'flex';
+
+            document.getElementById('editNamaModel').value = nama;
+            document.getElementById('editTimeStep').value = timestep;
+            fileNameEdit.textContent = '';
+        }
+
+        function tutupModalEditModel() {
+            modalEdit.style.display = 'none';
+        }
+
+        function triggerEditFileUpload() {
+            fileInputEdit.click();
+        }
+
+        function simpanPerubahanModel() {
+            const namaBaru = document.getElementById('editNamaModel').value.trim();
+            const timeStepBaru = document.getElementById('editTimeStep').value.trim();
+
+            if (!namaBaru || !timeStepBaru) {
+                alert("Nama Model dan TimeStep tidak boleh kosong!");
+                return;
+            }
+
+            alert(`✅ Perubahan berhasil disimpan!\n\nNama Model: ${namaBaru}\nTimeStep: ${timeStepBaru}`);
+
+            tutupModalEditModel();
+            // Nanti bisa tambah logic update tabel di sini
+        }
+
+        // File Upload Handler untuk Tambah
+        fileInputTambah.addEventListener('change', function () {
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                if (!file.name.toLowerCase().endsWith('.h5')) {
+                    alert("Hanya file .h5 yang diperbolehkan!");
+                    this.value = '';
+                    return;
+                }
+                fileNameTambah.textContent = `✓ File terpilih: ${file.name}`;
+                fileNameTambah.style.color = '#10b981';
+            }
+        });
+
+        // File Upload Handler untuk Edit
+        fileInputEdit.addEventListener('change', function () {
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                if (!file.name.toLowerCase().endsWith('.h5')) {
+                    alert("Hanya file .h5 yang diperbolehkan!");
+                    this.value = '';
+                    return;
+                }
+                fileNameEdit.textContent = `✓ File terpilih: ${file.name}`;
+                fileNameEdit.style.color = '#10b981';
+            }
+        });
+
+        // Tutup modal dengan klik luar atau ESC
+        window.onclick = function (event) {
+            if (event.target === modalTambah) tutupModalTambahModel();
+            if (event.target === modalEdit) tutupModalEditModel();
+        };
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === "Escape") {
+                if (modalTambah.style.display === 'flex') tutupModalTambahModel();
+                if (modalEdit.style.display === 'flex') tutupModalEditModel();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

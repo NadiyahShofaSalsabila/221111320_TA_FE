@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DATA A-STOCK</title>
+    <link rel="stylesheet" href="\./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <span>A-<span class="highlight">STOCK</span></span>
+            </div>
+
+            <!-- Checkbox Trick + Hamburger -->
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
+            <!-- Menu -->
+            <div class="nav-menu">
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="/data" class="nav-link active">
+                    <i class="fas fa-database"></i>
+                    <span>Data</span>
+                </a>
+                <a href="/model" class="nav-link">
+                    <i class="fas fa-cogs"></i>
+                    <span>Model</span>
+                </a>
+                <a href="/predict" class="nav-link">
+                    <i class="fas fa-magic"></i>
+                    <span>Predict</span>
+                </a>
+                <a href="/history" class="nav-link">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="data-main">
+        <div class="data-container">
+
+            <!-- Header -->
+            <div class="data-header">
+                <h1 class="data-title">
+                    DATA HARGA SAHAM<br>
+                    PT ANEKA TAMBANG TBK
+                </h1>
+            </div>
+            <div class="data-actions">
+                <button class="btn btn-secondary" onclick="bukaGrafikModal()">
+                    <i class="fas fa-chart-line"></i>
+                    LIHAT GRAFIK
+                </button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-upload"></i>
+                    UPLOAD DATA
+                </button>
+            </div>
+            <br>
+            <!-- Tabel -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>DATE</th>
+                            <th>CLOSE</th>
+                            <th>HIGH</th>
+                            <th>LOW</th>
+                            <th>OPEN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2026-04-07</td>
+                            <td>2,850</td>
+                            <td>2,920</td>
+                            <td>2,810</td>
+                            <td>2,870</td>
+                        </tr>
+                        <tr>
+                            <td>2026-04-06</td>
+                            <td>2,860</td>
+                            <td>2,900</td>
+                            <td>2,830</td>
+                            <td>2,845</td>
+                        </tr>
+                        <tr>
+                            <td>2026-04-05</td>
+                            <td>2,810</td>
+                            <td>2,870</td>
+                            <td>2,780</td>
+                            <td>2,855</td>
+                        </tr>
+                        <tr>
+                            <td>2026-04-04</td>
+                            <td>2,795</td>
+                            <td>2,840</td>
+                            <td>2,760</td>
+                            <td>2,810</td>
+                        </tr>
+                        <tr>
+                            <td>2026-04-03</td>
+                            <td>2,820</td>
+                            <td>2,880</td>
+                            <td>2,790</td>
+                            <td>2,830</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal Grafik -->
+    <div id="grafikModal" class="modal">
+        <div class="modal-content">
+
+            <!-- Judul Modal -->
+            <div class="modal-title">
+                GRAFIK HARGA SAHAM
+            </div>
+
+            <div class="modal-body">
+                <div class="grafik-placeholder">
+                    <!-- Placeholder untuk grafik (bisa diganti dengan Chart.js nanti) -->
+                    <div class="placeholder-box">
+                        <i class="fas fa-chart-line grafik-icon"></i>
+                        <p>Grafik Harga Saham PT Aneka Tambang TBK<br>akan ditampilkan di sini</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tombol TUTUP di bawah -->
+            <div class="modal-footer">
+                <button class="btn-tutup" onclick="tutupModal()">
+                    TUTUP
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function bukaGrafikModal() {
+            document.getElementById('grafikModal').style.display = 'flex';
+        }
+
+        function tutupModal() {
+            document.getElementById('grafikModal').style.display = 'none';
+        }
+
+        // Klik di luar modal untuk menutup
+        window.onclick = function (event) {
+            const modal = document.getElementById('grafikModal');
+            if (event.target === modal) {
+                tutupModal();
+            }
+        }
+    </script>
+
+</body>
+
+</html>
